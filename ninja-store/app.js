@@ -11,6 +11,8 @@ var stores = require('./routes/stores')
 
 var app = express();
 
+var session = require("express-session");
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -22,7 +24,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+app.use(session({
+  resave: true, 
+  saveUninitialized: true, 
+  secret: 'SOMERANDOMSECRETHERE', 
+  cookie: {
+   maxAge: 60000 
+ }}));
 
 app.use('/', routes);
 // app.use('/users', users);
@@ -58,6 +67,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
