@@ -3,3 +3,7 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  a(href='/users/login/') 
+    input(type='submit', value='Login')
+  a(href='/users/sign_up/') 
+    input(type='submit', value='Register')
